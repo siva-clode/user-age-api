@@ -60,6 +60,14 @@ func main() {
 	app.Use(middleware.RequestID())
 	app.Use(middleware.RequestLogger(logg))
 
+	// serve static files (swagger UI + openapi)
+	app.Static("/static", "static")
+
+	// docs route -> swagger UI
+	app.Get("/docs", func(c *fiber.Ctx) error {
+		return c.Redirect("/static/docs/swagger.html")
+	})
+
 	routes.Register(app, repo, logg)
 
 	addr := fmt.Sprintf(":%s", port)
