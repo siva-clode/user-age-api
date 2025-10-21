@@ -5,7 +5,7 @@ import (
 	"database/sql"
 	"time"
 
-	db "github.com/bugude101/user-age-api/db/sqlc"
+	db "github.com/bugude99/user-age-api/db/sqlc"
 )
 
 type UserRepo struct {

@@ -4,8 +4,8 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"go.uber.org/zap"
 
-	"github.com/bugude101/user-age-api/internal/handler"
-	"github.com/bugude101/user-age-api/internal/repository"
+	"github.com/bugude99/user-age-api/internal/handler"
+	"github.com/bugude99/user-age-api/internal/repository"
 )
 
 func Register(app *fiber.App, repo *repository.UserRepo, logger *zap.Logger) {

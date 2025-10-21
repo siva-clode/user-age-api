@@ -1,4 +1,4 @@
-module github.com/bugude101/user-age-api
+module github.com/bugude99/user-age-api
 
 go 1.25.3
 

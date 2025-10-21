@@ -11,10 +11,11 @@ import (
 	_ "github.com/jackc/pgx/v5/stdlib"
 	"go.uber.org/zap"
 
-	"github.com/bugude101/user-age-api/internal/logger"
-	"github.com/bugude101/user-age-api/internal/middleware"
-	"github.com/bugude101/user-age-api/internal/repository"
-	"github.com/bugude101/user-age-api/internal/routes"
+	"github.com/bugude99/user-age-api/internal/dbinit"
+	"github.com/bugude99/user-age-api/internal/logger"
+	"github.com/bugude99/user-age-api/internal/middleware"
+	"github.com/bugude99/user-age-api/internal/repository"
+	"github.com/bugude99/user-age-api/internal/routes"
 )
 
 func main() {
@@ -42,6 +43,11 @@ func main() {
 	}
 	db.SetMaxOpenConns(20)
 	db.SetConnMaxLifetime(time.Minute * 5)
+
+	// Auto create table if missing
+	if err := dbinit.EnsureTables(db); err != nil {
+		log.Fatal("table creation failed:", err)
+	}
 
 	// repository
 	repo := repository.NewUserRepo(db)

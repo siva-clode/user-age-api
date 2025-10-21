@@ -10,8 +10,8 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"go.uber.org/zap"
 
-	"github.com/bugude101/user-age-api/internal/repository"
-	"github.com/bugude101/user-age-api/internal/service"
+	"github.com/bugude99/user-age-api/internal/repository"
+	"github.com/bugude99/user-age-api/internal/service"
 )
 
 type UserHandler struct {
