@@ -1,0 +1,6 @@
+-- name: create_users_table
+CREATE TABLE IF NOT EXISTS users (
+    id SERIAL PRIMARY KEY,
+    name TEXT NOT NULL,
+    dob DATE NOT NULL
+);
