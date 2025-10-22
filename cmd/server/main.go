@@ -65,7 +65,8 @@ func main() {
 
 	// docs route -> swagger UI
 	app.Get("/docs", func(c *fiber.Ctx) error {
-		return c.Redirect("/static/docs/swagger.html")
+		// redirect to the swagger.html with a timestamp to avoid serving a cached HTML
+		return c.Redirect("/static/docs/swagger.html?v=" + fmt.Sprintf("%d", time.Now().Unix()))
 	})
 
 	routes.Register(app, repo, logg)

@@ -9,7 +9,7 @@ tags:
   - name: Users
     description: User management operations
 paths:
-  /users:
+  /api/users:
     post:
       tags: [Users]
       summary: Create a user
@@ -30,6 +30,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
+              example:
+                id: 1
+                name: "John Doe"
+                dob: "1990-01-01"
         '400':
           description: Bad request - invalid input
     get:
@@ -58,7 +62,12 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/User'
-  /users/{id}:
+              example:
+                - id: 1
+                  name: "John Doe"
+                  dob: "1990-01-01"
+                  age: 33
+  /api/users/{id}:
     parameters:
       - name: id
         in: path
@@ -77,8 +86,17 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
+              example:
+                id: 1
+                name: "John Doe"
+                dob: "1990-01-01"
+                age: 33
         '404':
           description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
     put:
       tags: [Users]
       summary: Update user
@@ -99,10 +117,22 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
+              example:
+                id: 1
+                name: "Jane Doe"
+                dob: "1995-05-15"
         '400':
           description: Bad request - invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '404':
           description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
     delete:
       tags: [Users]
       summary: Delete user
@@ -149,3 +179,9 @@ components:
           type: integer
           example: 33
           description: Calculated age based on date of birth
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+          example: "User not found"

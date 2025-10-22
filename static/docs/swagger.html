@@ -9,8 +9,10 @@
     <div id="swagger-ui"></div>
     <script src="https://unpkg.com/swagger-ui-dist/swagger-ui-bundle.js"></script>
     <script>
+      // add a timestamp to avoid stale-cache issues when testing
+      const specUrl = '/static/docs/openapi.yaml?v=' + Date.now();
       window.ui = SwaggerUIBundle({
-        url: './openapi.yaml',
+        url: specUrl,
         dom_id: '#swagger-ui',
         deepLinking: true,
         presets: [
