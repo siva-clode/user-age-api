@@ -1,0 +1,151 @@
+openapi: "3.0.3"
+info:
+  title: User Age API
+  version: "1.0.0"
+  description: API for creating and retrieving users and calculating age
+servers:
+  - url: http://localhost:8080
+tags:
+  - name: Users
+    description: User management operations
+paths:
+  /users:
+    post:
+      tags: [Users]
+      summary: Create a user
+      description: Create a new user with name and date of birth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUser'
+            example:
+              name: "John Doe"
+              dob: "1990-01-01"
+      responses:
+        '201':
+          description: User created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Bad request - invalid input
+    get:
+      tags: [Users]
+      summary: List users
+      description: Get a list of users with pagination
+      parameters:
+        - name: limit
+          in: query
+          description: Maximum number of users to return
+          schema:
+            type: integer
+            default: 100
+        - name: offset
+          in: query
+          description: Number of users to skip
+          schema:
+            type: integer
+            default: 0
+      responses:
+        '200':
+          description: List of users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+  /users/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: User ID
+        schema:
+          type: integer
+    get:
+      tags: [Users]
+      summary: Get user by ID
+      description: Get detailed information about a user including their calculated age
+      responses:
+        '200':
+          description: User found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '404':
+          description: User not found
+    put:
+      tags: [Users]
+      summary: Update user
+      description: Update a user's name and date of birth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUser'
+            example:
+              name: "Jane Doe"
+              dob: "1995-05-15"
+      responses:
+        '200':
+          description: User updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Bad request - invalid input
+        '404':
+          description: User not found
+    delete:
+      tags: [Users]
+      summary: Delete user
+      description: Delete a user by their ID
+      responses:
+        '204':
+          description: User deleted successfully
+        '404':
+          description: User not found
+components:
+  schemas:
+    CreateUser:
+      type: object
+      required:
+        - name
+        - dob
+      properties:
+        name:
+          type: string
+          example: "John Doe"
+          description: User's full name
+        dob:
+          type: string
+          format: date
+          example: "1990-01-01"
+          description: Date of birth in YYYY-MM-DD format
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+          description: Unique user identifier
+        name:
+          type: string
+          example: "John Doe"
+          description: User's full name
+        dob:
+          type: string
+          format: date
+          example: "1990-01-01"
+          description: Date of birth in YYYY-MM-DD format
+        age:
+          type: integer
+          example: 33
+          description: Calculated age based on date of birth
