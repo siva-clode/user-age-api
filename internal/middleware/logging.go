@@ -12,6 +12,8 @@ func RequestLogger(logger *zap.Logger) fiber.Handler {
 		start := time.Now()
 		err := c.Next()
 		elapsed := time.Since(start)
+		// record milliseconds as integer for consistent logging
+		elapsedMs := elapsed.Milliseconds()
 		// prefer request id from locals (set by RequestID middleware), fall back to header
 		rid := ""
 		if v := c.Locals(RequestIDHeader); v != nil {
@@ -27,7 +29,8 @@ func RequestLogger(logger *zap.Logger) fiber.Handler {
 			zap.String("method", c.Method()),
 			zap.String("path", c.Path()),
 			zap.Int("status", c.Response().StatusCode()),
-			zap.Duration("duration", elapsed),
+			zap.Int64("duration_ms", elapsedMs),
+			zap.String("duration", elapsed.String()),
 			zap.String("request_id", rid),
 		)
 		return err
