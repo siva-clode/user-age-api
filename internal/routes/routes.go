@@ -9,6 +9,7 @@ import (
 )
 
 func Register(app *fiber.App, repo *repository.UserRepo, logger *zap.Logger) {
+	logger.Info("hello")
 	uh := handler.NewUserHandler(repo, logger)
 	api := app.Group("/api")
 	uh.RegisterRoutes(api)
