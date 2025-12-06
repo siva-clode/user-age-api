@@ -3,7 +3,7 @@ name: Deploy with Aramb
 on:
   push:
     branches:
-      - master
+      - main
 
 permissions:
   contents: read
@@ -31,3 +31,5 @@ jobs:
           DOCKER_REPOSITORY: ${{ github.repository }}
           DOCKER_USERNAME: ${{ github.actor }}
           DOCKER_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
+          ARAMB_SERVICE_ID: 1619389a-f8f5-437a-aaaf-07505d5a316a
+          ARAMB_DEPLOYMENT_ID: 3aa44e82-e105-42b4-96fc-d8cc531b2860
