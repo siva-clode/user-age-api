@@ -46,7 +46,7 @@ func main() {
 
 	// Auto create table if missing
 	if err := dbinit.EnsureTables(db); err != nil {
-		log.Fatal("table creation failed:", err)
+		log.Fatal("table creation failed: ", err)
 	}
 
 	// repository
